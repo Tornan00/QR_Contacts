@@ -57,7 +57,7 @@ public class QRCodeManager {
 	 * @throws WriterException	- in the case of an internal failure with the writer
 	 * @throws IOException		- in the case that the desired file path is invalid
 	 */
-	private static void generateQRCodeImage(String text, int width, int height, String filePath) throws WriterException, IOException {
+	private static void encodeQRCode(String text, int width, int height, String filePath) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
 
@@ -95,7 +95,7 @@ public class QRCodeManager {
 //		//Generate a QR code with the given message and save it in the given path
 //		
 //        try {
-//            generateQRCodeImage(QR_CODE_MESSAGE, 350, 350, QR_CODE_IMAGE_PATH);
+//            encodeQRCode(QR_CODE_MESSAGE, 350, 350, QR_CODE_IMAGE_PATH);
 //        } catch (WriterException e) {
 //            System.out.println("EXCEPTION: Could not generate QR Code, WriterException :: " + e.getMessage());
 //        } catch (IOException e) {
