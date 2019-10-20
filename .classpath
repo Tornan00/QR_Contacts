@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="QR_Contacts/src"/>
+	<classpathentry kind="lib" path="QR_Contacts/lib/core-3.3.0.jar"/>
+	<classpathentry kind="lib" path="QR_Contacts/lib/javase-3.3.0.jar"/>
+	<classpathentry kind="lib" path="QR_Contacts/lib/sqlite-jdbc-3.27.2.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
