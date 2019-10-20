@@ -45,7 +45,7 @@ public class QRCodeManager {
 	}
 	
 	public void setPath(String path) {
-		QR_CODE_IMAGE_PATH = "QR_Contacts/qrCode-storage/" + path; // Automatically inserts into correct directory
+		QR_CODE_IMAGE_PATH = path;
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class QRCodeManager {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
 
-        Path path = FileSystems.getDefault().getPath(filePath);
+        Path path = FileSystems.getDefault().getPath("QR_Contacts/qrCode-storage/" + filePath); // Automatically routes codes to dedicated storage
         MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
     }
 	
