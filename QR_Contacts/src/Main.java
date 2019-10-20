@@ -15,6 +15,10 @@ class Main extends JFrame {
     static JFrame frame; 
     static JList contacts;
     static JLabel label;
+    static JButton newb;
+    static JButton viewb;
+    static JButton deleteb;
+    static JButton scanb;
     static String selected;
     static Connection connection;
    
@@ -22,10 +26,19 @@ class Main extends JFrame {
     public static void main(String[] args) {
     	//Initializations
         frame = new JFrame("frame");  
-        JPanel panel = new JPanel(); 
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
         label = new JLabel();
+        newb = new JButton("New");
+        viewb = new JButton("View");
+        deleteb = new JButton("Delete");
+        scanb = new JButton("Scan");
+         
+        //design label
         label.setText("Contacts");
-          
+        label.setFont(new Font("Calibri", Font.BOLD, 24));
+        
         try {
 			connectData();
 		} catch (ClassNotFoundException e) {
@@ -33,23 +46,57 @@ class Main extends JFrame {
 		}
         
         String people[] = buildPeopleString();
-          
-        for (int i = 0; i < people.length; i ++) {
-        	System.out.println(people[i]);
-        }
         
         //create list
         contacts = new JList(people);
         contacts.setSelectedIndex(0);
+        contacts.setFont(new Font("TimesRoman", Font.PLAIN, 18));
           
-        //add list to panel 
-        panel.add(label); 
-        panel.add(contacts); 
+        //add label to panel 
+        c.gridx = 1;
+        c.gridy = 0;
+        c.ipady = 30;
+        panel.add(label, c);
+        
+        //make the list scroll
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(contacts);
+        contacts.setLayoutOrientation(JList.VERTICAL);
+        
+        //add list to panel
+        c.gridx = 1;
+        c.gridy = 1;
+        c.ipady = 200;
+        c.ipadx = 100;
+        c.gridheight = 5;
+        panel.add(scrollPane, c);
+        
+        //add new button
+        c.ipady = 0;
+        c.ipadx = 0;
+        c.gridx = 0;
+        c.gridy = 6;
+        panel.add(newb, c);
+        
+        //add scan button
+        c.gridx = 0;
+        c.gridy = 5;
+        panel.add(scanb, c);
+        
+        //add view button
+        c.gridx = 1;
+        c.gridy = 6;
+        panel.add(viewb, c);
+
+        //add delete button
+        c.gridx = 2;
+        c.gridy = 6;
+        panel.add(deleteb, c);
    
         frame.add(panel); 
           
         //set the size of frame 
-        frame.setSize(500,600); 
+        frame.setSize(300,400); 
            
         frame.show(); 
     } 
@@ -71,7 +118,7 @@ class Main extends JFrame {
     			rs.next();
     			people[i] = rs.getString(1);
     		}
-    		contacts.getselectedvalue
+
     		return people;
    
     	} catch (SQLException e) {
@@ -87,12 +134,6 @@ class Main extends JFrame {
         try {
            // create a database connection
            connection = DriverManager.getConnection("jdbc:sqlite:database\\QR_Contacts.db");
-           System.out.println("Connected to the database");
-           DatabaseMetaData dm = (DatabaseMetaData) connection.getMetaData();
-           System.out.println("Driver name: " + dm.getDriverName());
-           System.out.println("Driver version: " + dm.getDriverVersion());
-           System.out.println("Product name: " + dm.getDatabaseProductName());
-           System.out.println("Product version: " + dm.getDatabaseProductVersion());
         } catch(SQLException e) { 
         	
         }      
