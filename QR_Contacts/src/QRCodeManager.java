@@ -45,7 +45,7 @@ public class QRCodeManager {
 	}
 	
 	public void setPath(String path) {
-		QR_CODE_IMAGE_PATH = path;
+		QR_CODE_IMAGE_PATH = "QR_Contacts/qrCode-storage/" + path; // Automatically inserts into correct directory
 	}
 	
 	/**
