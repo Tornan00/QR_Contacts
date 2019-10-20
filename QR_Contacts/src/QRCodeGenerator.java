@@ -17,7 +17,7 @@ import java.nio.file.Path;
  */
 public class QRCodeGenerator {
 	//Change this string to fit your file system
-    private static final String QR_CODE_IMAGE_PATH = "/home/kallen/Desktop/MyQRCode.png";
+    private static final String QR_CODE_IMAGE_PATH = "C:\\Users\\jpdom\\Desktop\\qr.png";
 
     private static void generateQRCodeImage(String text, int width, int height, String filePath)
             throws WriterException, IOException {
@@ -30,7 +30,7 @@ public class QRCodeGenerator {
 
     public static void main(String[] args) {
         try {
-            generateQRCodeImage("Penis Oh I'm excited for penis", 350, 350, QR_CODE_IMAGE_PATH);
+            generateQRCodeImage("Elite Dangerous is really fun", 350, 350, QR_CODE_IMAGE_PATH);
         } catch (WriterException e) {
             System.out.println("Could not generate QR Code, WriterException :: " + e.getMessage());
         } catch (IOException e) {
