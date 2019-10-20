@@ -2,9 +2,13 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*; 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-class Main extends JFrame implements ListSelectionListener 
-{ 
+class Main extends JFrame { 
       
     //globals
     static JFrame frame; 
@@ -16,27 +20,22 @@ class Main extends JFrame implements ListSelectionListener
     public static void main(String[] args) {
     	//Initializations
         frame = new JFrame("frame");  
-        Main main = new Main();  
         JPanel panel = new JPanel(); 
         label.setText("Contacts");
           
-        String people[] = buildPeopleString();
+        //String people[] = buildPeopleString();
+          String people[] = new String[1];
+          people[0] = "jeff";
           
         //create list
         contacts = new JList(people);
         contacts.setSelectedIndex(0);
           
-        //add item listener 
-        contacts.addListSelectionListener(s);
-          
         //add list to panel 
-        p.add(l); 
-        p.add(b); 
-        p.add(b1); 
-        p.add(b2); 
-        p.add(l1); 
+        panel.add(label); 
+        panel.add(contacts); 
    
-        frame.add(p); 
+        frame.add(panel); 
           
         //set the size of frame 
         frame.setSize(500,600); 
@@ -48,8 +47,53 @@ class Main extends JFrame implements ListSelectionListener
     private static String[] buildPeopleString() {
     	
 		
-	}
-	
-      
+	}	 
+    
+    private static void connection() throws ClassNotFoundException {
+        Class.forName("org.sqlite.JDBC");
+
+        Connection connection = null;
+        try
+        {
+           // create a database connection
+           connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+
+           Statement statement = connection.createStatement();
+           statement.setQueryTimeout(30);  // set timeout to 30 sec.
+
+
+           statement.executeUpdate("DROP TABLE IF EXISTS person");
+           statement.executeUpdate("CREATE TABLE person (id INTEGER, name STRING)");
+
+           int ids [] = {1,2,3,4,5};
+           String names [] = {"Peter","Pallar","William","Paul","James Bond"};
+
+           for(int i=0;i<ids.length;i++){
+                statement.executeUpdate("INSERT INTO person values(' "+ids[i]+"', '"+names[i]+"')");   
+           }
+
+           //statement.executeUpdate("UPDATE person SET name='Peter' WHERE id='1'");
+           //statement.executeUpdate("DELETE FROM person WHERE id='1'");
+
+             ResultSet resultSet = statement.executeQuery("SELECT * from person");
+             while(resultSet.next())
+             {
+                // iterate & read the result set
+                System.out.println("name = " + resultSet.getString("name"));
+                System.out.println("id = " + resultSet.getInt("id"));
+             }
+            }
+
+       catch(SQLException e){  System.err.println(e.getMessage()); }       
+        finally {         
+              try {
+                    if(connection != null)
+                       connection.close();
+                    }
+              catch(SQLException e) {  // Use SQLException class instead.          
+                 System.err.println(e); 
+               }
+        }
+    }
       
 } 
