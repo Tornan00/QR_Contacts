@@ -1,5 +1,7 @@
 import javax.swing.event.*; 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*; 
 import java.sql.Connection;
@@ -93,6 +95,65 @@ class Main extends JFrame {
         c.gridy = 6;
         panel.add(deleteb, c);
    
+        //action listeners
+        //Create new Function
+        newb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Initializations
+				JFrame neww = new JFrame();
+				JPanel newp = new JPanel();
+				newp.setLayout(new BoxLayout(newp, BoxLayout.PAGE_AXIS));
+				JLabel newl = new JLabel("New Contact Name");
+				JFormattedTextField newt = new JFormattedTextField();
+				JButton but = new JButton("Create");
+				
+				newp.add(newl);
+				newp.add(newt);
+				newp.add(but);
+				neww.add(newp);
+				neww.setSize(100,100);
+				neww.show();
+			}
+		});
+        //Start scan function
+        scanb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+        //Open view function
+        viewb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+        //Delete function
+        deleteb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String name = (String) contacts.getSelectedValue();
+		
+				try {
+					Statement statement = connection.createStatement();
+					
+					//gets ID
+					ResultSet rs = statement.executeQuery("SELECT ID FROM Contacts WHERE Name = " + name);
+					int ID = rs.getInt(1);
+					
+					//prevents users from deleting themselves
+					if (ID == 1) {
+						return;
+					}
+					
+					//removes all instances in
+					statement.execute("DELETE FROM Contacts WHERE ID = " + ID);
+					statement.execute("DELETE FROM Info WHERE ID = " + ID);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+        
+        
         frame.add(panel); 
           
         //set the size of frame 
