@@ -98,30 +98,30 @@ public class QRCodeManager {
 	 * The main method is used exclusively for local development testing
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		
-		//Generate a QR code with the given message and save it in the given path
-		
-        try {
-            encodeQRCode(QR_CODE_MESSAGE, 350, 350, QR_CODE_IMAGE_PATH);
-        } catch (WriterException e) {
-            System.out.println("EXCEPTION: Could not generate QR Code, WriterException :: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("EXCEPTION: Could not generate QR Code, IOException :: " + e.getMessage());
-        }
-        
-        //Attempt to read said QR code and decode the message and return to stdout for dev verification.
-        
-        String decodedText = null;
-		try {
-			decodedText = decodeQRCode(QR_CODE_IMAGE_PATH);
-		} catch (IOException e) {
-			System.out.println("EXCEPTION: Could not locate QR Code at given path, IOException :: " + e.getMessage());
-		}
-        if(decodedText == null) {
-            System.out.println("No QR Code found in the image");
-        } else {
-            System.out.println("Found text: " + decodedText);
-        }
-    }
+//	public static void main(String[] args) {
+//		
+//		//Generate a QR code with the given message and save it in the given path
+//		
+//        try {
+//            encodeQRCode(QR_CODE_MESSAGE, 350, 350, QR_CODE_IMAGE_PATH);
+//        } catch (WriterException e) {
+//            System.out.println("EXCEPTION: Could not generate QR Code, WriterException :: " + e.getMessage());
+//        } catch (IOException e) {
+//            System.out.println("EXCEPTION: Could not generate QR Code, IOException :: " + e.getMessage());
+//        }
+//        
+//        //Attempt to read said QR code and decode the message and return to stdout for dev verification.
+//        
+//        String decodedText = null;
+//		try {
+//			decodedText = decodeQRCode(QR_CODE_IMAGE_PATH);
+//		} catch (IOException e) {
+//			System.out.println("EXCEPTION: Could not locate QR Code at given path, IOException :: " + e.getMessage());
+//		}
+//        if(decodedText == null) {
+//            System.out.println("No QR Code found in the image");
+//        } else {
+//            System.out.println("Found text: " + decodedText);
+//        }
+//    }
 }
