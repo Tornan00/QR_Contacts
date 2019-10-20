@@ -113,6 +113,24 @@ class Main extends JFrame {
 				neww.add(newp);
 				neww.setSize(100,100);
 				neww.show();
+				
+		        but.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						String newName = newt.getText();
+						if (newName != null) {
+							try {
+								connectData();
+								Statement statement = connection.createStatement();
+								statement.execute("INSERT INTO Contacts (Name) VALUES (\"" + newName + "\")");
+								neww.dispose();
+							} catch (SQLException e1) {
+								e1.printStackTrace();
+							} catch (ClassNotFoundException e1) {
+								e1.printStackTrace();
+							}
+						}
+ 					}
+				});
 			}
 		});
         //Start scan function
@@ -133,11 +151,13 @@ class Main extends JFrame {
 				String name = (String) contacts.getSelectedValue();
 		
 				try {
+					connectData();
 					Statement statement = connection.createStatement();
 					
 					//gets ID
-					ResultSet rs = statement.executeQuery("SELECT ID FROM Contacts WHERE Name = " + name);
+					ResultSet rs = statement.executeQuery("SELECT ID FROM Contacts WHERE Name = \"" + name + "\"");
 					int ID = rs.getInt(1);
+					rs.close();
 					
 					//prevents users from deleting themselves
 					if (ID == 1) {
@@ -147,7 +167,10 @@ class Main extends JFrame {
 					//removes all instances in
 					statement.execute("DELETE FROM Contacts WHERE ID = " + ID);
 					statement.execute("DELETE FROM Info WHERE ID = " + ID);
+					connection.close();
 				} catch (SQLException e1) {
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
 					e1.printStackTrace();
 				}
 			}
@@ -180,6 +203,8 @@ class Main extends JFrame {
     			people[i] = rs.getString(1);
     		}
 
+    		connection.close();
+    		rs.close();
     		return people;
    
     	} catch (SQLException e) {
@@ -199,6 +224,15 @@ class Main extends JFrame {
         	
         }      
 
+    }
+    
+    private static void rebuildContacts() {
+String people[] = buildPeopleString();
+        
+        //recreate list
+        contacts = new JList(people);
+        contacts.setSelectedIndex(0);
+        contacts.setFont(new Font("TimesRoman", Font.PLAIN, 18));
     }
       
 } 
