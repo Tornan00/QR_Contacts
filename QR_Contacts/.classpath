@@ -7,5 +7,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/jpdom/git/QR_Contacts/QR_Contacts/lib/sqlite-jdbc-3.27.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jpdom/git/QR_Contacts/QR_Contacts/lib/javase-3.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jpdom/git/QR_Contacts/QR_Contacts/lib/core-3.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
